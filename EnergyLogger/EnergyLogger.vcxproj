@@ -61,9 +61,17 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClCompile Include="Adafruit_GFX.cpp" />
+    <ClCompile Include="ArduiPi_OLED.cpp" />
+    <ClCompile Include="bcm2835.c" />
+    <ClCompile Include="glcdfont.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Adafruit_GFX.h" />
+    <ClInclude Include="ArduiPi_OLED.h" />
+    <ClInclude Include="ArduiPi_OLED_lib.h" />
+    <ClInclude Include="bcm2835.h" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
