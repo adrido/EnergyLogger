@@ -65,6 +65,7 @@
     <ClCompile Include="ADCSingle.cpp" />
     <ClCompile Include="ArduiPi_OLED.cpp" />
     <ClCompile Include="bcm2835.c" />
+    <ClCompile Include="EnergyLogger.cpp" />
     <ClCompile Include="glcdfont.c" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -74,6 +75,7 @@
     <ClInclude Include="ArduiPi_OLED.h" />
     <ClInclude Include="ArduiPi_OLED_lib.h" />
     <ClInclude Include="bcm2835.h" />
+    <ClInclude Include="EnergyLogger.h" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
