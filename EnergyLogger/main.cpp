@@ -1,3 +1,6 @@
+#include <iostream>
+#include <chrono>
+
 #include "ArduiPi_OLED_lib.h"
 #include "Adafruit_GFX.h"
 #include "ArduiPi_OLED.h"
@@ -17,6 +20,8 @@ int main(int argc, char **argv)
 	// Instantiate the ADC
 	ADCSingle adc;
 
+	auto start = std::chrono::high_resolution_clock::now();
+
 	if(!adc.open())
 		exit(EXIT_FAILURE);
 	int u1 = adc.startConversation(ADCSingle::PinSel::ANC0);
@@ -24,8 +29,13 @@ int main(int argc, char **argv)
 	int u3 = adc.startConversation(ADCSingle::PinSel::ANC2);
 	adc.close();
 
+	auto end = std::chrono::high_resolution_clock::now();
+	std::cout << "RUNTIME of ADC: " 
+		<< std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
+		<< " us " << std::endl;
 
 
+	start = std::chrono::high_resolution_clock::now();
 	// I2C change parameters to fit to your LCD
 	if (!display.init(OLED_I2C_RESET, OLED_ADAFRUIT_I2C_128x64))
 		exit(EXIT_FAILURE);
@@ -52,6 +62,10 @@ int main(int argc, char **argv)
 	// Free PI GPIO ports
 	display.close();
 
+	end = std::chrono::high_resolution_clock::now();
+	std::cout << "RUNTIME of Display: "
+		<< std::chrono::duration_cast<std::chrono::microseconds>(end - start).count()
+		<< " us " << std::endl;
 }
 
 
