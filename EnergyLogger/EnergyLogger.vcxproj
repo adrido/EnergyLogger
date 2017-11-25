@@ -62,6 +62,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClCompile Include="Adafruit_GFX.cpp" />
+    <ClCompile Include="ADCSingle.cpp" />
     <ClCompile Include="ArduiPi_OLED.cpp" />
     <ClCompile Include="bcm2835.c" />
     <ClCompile Include="glcdfont.c" />
@@ -69,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Adafruit_GFX.h" />
+    <ClInclude Include="ADCSingle.h" />
     <ClInclude Include="ArduiPi_OLED.h" />
     <ClInclude Include="ArduiPi_OLED_lib.h" />
     <ClInclude Include="bcm2835.h" />
