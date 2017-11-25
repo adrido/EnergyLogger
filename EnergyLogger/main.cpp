@@ -12,6 +12,9 @@ Comments:
 ====================================================================== */
 int main(int argc, char **argv)
 {
+	// Instantiate the display
+	ArduiPi_OLED display;
+	// Instantiate the ADC
 	ADCSingle adc;
 
 	if(!adc.open())
@@ -21,9 +24,6 @@ int main(int argc, char **argv)
 	int u3 = adc.startConversation(ADCSingle::PinSel::ANC2);
 	adc.close();
 
-
-	// Instantiate the display
-	ArduiPi_OLED display;
 
 
 	// I2C change parameters to fit to your LCD
