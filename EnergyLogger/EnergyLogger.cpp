@@ -1,5 +1,7 @@
 #include "EnergyLogger.h"
 
+bool EnergyLogger::running = true;
+
 EnergyLogger::EnergyLogger()
 {
 	initDisplay();
@@ -37,7 +39,7 @@ void EnergyLogger::initDisplay()
 
 void EnergyLogger::runLoop()
 {
-	while (true) 
+	while (running) 
 	{
 		auto start = std::chrono::high_resolution_clock::now();
 		startADC();
@@ -87,4 +89,10 @@ void EnergyLogger::drawDisplay()
 
 	// Free PI GPIO ports
 	//display.close();
+}
+
+void EnergyLogger::signalHandler(int signal)
+{
+	std::cout << "Shutting down..." << std::endl;
+	EnergyLogger::running = false;
 }
