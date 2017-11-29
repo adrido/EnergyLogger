@@ -27,6 +27,8 @@
 #include "./Adafruit_GFX.h"
 #include "./glcdfont.c"
 
+using namespace std;
+
 void Adafruit_GFX::constructor(int16_t w, int16_t h) 
 {
   _width = WIDTH = w;

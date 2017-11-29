@@ -65,6 +65,7 @@
     <ClCompile Include="ADCSingle.cpp" />
     <ClCompile Include="ArduiPi_OLED.cpp" />
     <ClCompile Include="bcm2835.c" />
+    <ClCompile Include="Database.cpp" />
     <ClCompile Include="EnergyLogger.cpp" />
     <ClCompile Include="glcdfont.c" />
     <ClCompile Include="main.cpp" />
@@ -75,9 +76,39 @@
     <ClInclude Include="ArduiPi_OLED.h" />
     <ClInclude Include="ArduiPi_OLED_lib.h" />
     <ClInclude Include="bcm2835.h" />
+    <ClInclude Include="Database.h" />
     <ClInclude Include="EnergyLogger.h" />
   </ItemGroup>
-  <ItemDefinitionGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
+    <Link>
+      <LibraryDependencies>mysqlcppconn</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
+    <Link>
+      <LibraryDependencies>mysqlcppconn</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <LibraryDependencies>mysqlcppconn</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Link>
+      <LibraryDependencies>mysqlcppconn</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <Link>
+      <LibraryDependencies>mysqlcppconn</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <Link>
+      <LibraryDependencies>mysqlcppconn</LibraryDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets" />
 </Project>
