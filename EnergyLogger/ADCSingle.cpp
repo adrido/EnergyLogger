@@ -1,7 +1,6 @@
 #include "ADCSingle.h"
 
 
-
 ADCSingle::ADCSingle()
 {
 }
@@ -43,8 +42,9 @@ int ADCSingle::startConversation(PinSel select)
 							  // 0 : Continuous conversion mode
 							  // 1 : Power-down single-shot mode (default)
 
-	writeBuf[2] = 0b10000101; // bits 7-0  0x85
+	writeBuf[2] = 0b11100101; // bits 7-0  0x85
 							  // Bits 7-5 data rate default to 100 for 128SPS
+							  //                               111 for 860SPS
 							  // Bits 4-0  comparator functions see spec sheet.
 
 							  // begin conversion
@@ -85,12 +85,75 @@ int ADCSingle::startConversation(PinSel select)
 	return val;
 }
 
+std::vector<int> ADCSingle::startConversationContinous(const PinSel select, const int numSamples)
+{
+	std::vector<int> arr;
+	arr.reserve(numSamples);
+
+	// set config register and start conversion
+	// ANC1 and GND, 4.096v, 128s/s
+	writeBuf[0] = 1;    // config register is 1
+	writeBuf[1] = 0b10000010 | static_cast<int>(select); // get the pinselect  
+														 // bit 15-8 0xD3
+														 // bit 15 flag bit for single shot
+														 // Bits 14-12 input selection:
+														 // 100 ANC0; 101 ANC1; 110 ANC2; 111 ANC3
+														 // Bits 11-9 Amp gain. Default to 010 here 001 P19
+														 // Bit 8 Operational mode of the ADS1115.
+														 // 0 : Continuous conversion mode
+														 // 1 : Power-down single-shot mode (default)
+
+	writeBuf[2] = 0b11100101; // bits 7-0  0x85
+							  // Bits 7-5 data rate default to 100 for 128SPS
+							  //                               111 for 860SPS
+							  // Bits 4-0  comparator functions see spec sheet.
+
+							  // begin conversion
+	if (write(fd, writeBuf, 3) != 3) {
+		perror("Write to register 1");
+		exit(-1);
+	}
+
+	int count = 0;
+
+	for (int count = 0; count < numSamples; count++ )
+	{
+		// read conversion register
+		if (read(fd, readBuf, 2) != 2) {
+			perror("Read conversion");
+			exit(-1);
+		}
+
+		// could also multiply by 256 then add readBuf[1]
+		val = readBuf[0] << 8 | readBuf[1];
+
+		arr[count] = val;
+	}
+	
+	// power down ASD1115
+	writeBuf[0] = 1;    // config register is 1
+	writeBuf[1] = 0b11000011; // bit 15-8 0xC3 single shot on
+	writeBuf[2] = 0b10000101; // bits 7-0  0x85
+	if (write(fd, writeBuf, 3) != 3) {
+		perror("Write to register 1");
+		exit(1);
+	}
+
+
+	return arr;
+}
+
 void ADCSingle::close()
 {
 	::close(fd);
 }
 
 float ADCSingle::toVolt(int val)
+{
+	return val * VPS;
+}
+
+double ADCSingle::toVolt(double val)
 {
 	return val * VPS;
 }

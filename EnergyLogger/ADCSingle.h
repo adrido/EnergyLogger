@@ -9,6 +9,7 @@
 #include <stdlib.h>    // exit
 #include <inttypes.h>  // uint8_t, etc
 #include <linux/i2c-dev.h> // I2C bus definitions
+#include <vector>
 
 class ADCSingle
 {
@@ -34,10 +35,13 @@ public:
 	the 16th bit being the sign of the differential reading.
 	*/
 	int startConversation(PinSel select);
+	std::vector<int> startConversationContinous(const PinSel select, const int numSamples);
 	void close();
 
-	static constexpr float VPS = 4.096f / 32768.0f; //volts per step
+	static constexpr double VPS = 4.096 / 32768.0; //volts per step
 	static float toVolt(int val);
+
+	static double toVolt(double val);
 
 private:
 	int fd;
